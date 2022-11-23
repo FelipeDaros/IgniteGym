@@ -6,7 +6,9 @@ import { useState } from "react";
 
 
 export function Home(){
-  const [groups, setGroups] = useState(["cotas", "perna", "ombro", "braço", "peito"]);
+  const [groups, setGroups] = useState(["costa", "perna", "ombro", "braço", "peito"]);
+  const [exercises, setExercises] = useState(["Peito 45", "Agachamento livre", "Elevação lateral", "Rosca", "Crucifixo"]);
+
   const [groupSelected, setGroupSelected] = useState('costa');
 
   return(
@@ -19,7 +21,7 @@ export function Home(){
           renderItem={({item}) => (
             <Group 
               name={item}
-              isActive={groupSelected === item}
+              isActive={String(groupSelected).toUpperCase() === String(item).toUpperCase()}
               onPress={() => setGroupSelected(item)}
             />
           )}
@@ -37,11 +39,19 @@ export function Home(){
             Exercícios
           </Heading>
           <Text color="gray.200" fontSize="sm">
-            4
+            {exercises.length}
           </Text>
         </HStack>
 
-        <ExeciseCard />
+        <FlatList 
+          data={exercises}
+          keyExtractor={item => item}
+          renderItem={({item}) => (
+            <ExeciseCard />
+          )}
+          showsVerticalScrollIndicator={false}
+          _contentContainerStyle={{ paddingBottom: 10 }}
+        />
       </VStack>
     </VStack>
   )
